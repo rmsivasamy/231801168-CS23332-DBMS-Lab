@@ -1,0 +1,37 @@
+//to fetch a player's details
+<?php
+/* Template Name: player_name Stats */
+get_header();
+?>
+
+<div class="player-stats">
+    <h1>Player Stats - PLAYER_NAME </h1>
+
+    <?php
+    $conn = new mysqli('localhost', 'root', '', 'franchise_db');
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT * FROM `PLAYER_NAME` WHERE `Player_ID` = 1";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo "<table border='1'>
+                    <tr><th>Matches Played</th><td>" . $row['Matches_played'] . "</td></tr>
+                    <tr><th>Runs</th><td>" . $row['Runs'] . "</td></tr>
+                    <tr><th>Wickets</th><td>" . $row['Wickets'] . "</td></tr>
+                    <tr><th>Specialization</th><td>" . $row['Specialization'] . "</td></tr>
+                    //Details displayed change from sport to sport
+                </table>";
+        }
+    } else {
+        echo "No data found for this player.";
+    }
+
+    $conn->close();
+    ?>
+</div>
+
+<?php get_footer(); ?>
